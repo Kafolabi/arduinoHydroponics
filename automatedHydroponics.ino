@@ -20,8 +20,9 @@
     // This code is in charge of collecting output data from the sensors 😀😀😀
     
     // Digital sensor(s) 
-    pinMode(1, OUTPUT); // Water pump
-    pinMode(2, OUTPUT); // Growth light
+    pinMode(1, OUTPUT); // Water pump(1) relay
+    pinMode(2, OUTPUT); // Growth light relay
+    pinMode(3, OUTPUT); // Water pump(2) relay
 
   }
 
@@ -53,12 +54,12 @@
   // If water level is too low, turn on the pump
   if (waterSensorValue >= 0 && waterSensorValue < 400) {
     digitalWrite(1, HIGH);
-    Serial.println('Water level is too low 😢😢😢')
+    Serial.println('Water level is too low 😢😢😢');
 
   // If water level is too high, turn the pump off
   } else if (waterSensorValue >= 400) {
     digitalWrite(1, LOW);
-    Serial.println('Water level is too high 😢😢😢')
+    Serial.println('Water level is too high 😢😢😢');
   }
 
   // Display temperature value
@@ -66,10 +67,15 @@
   delay(200);
 
   // 
-  if (lightValue === 'HIGH') {
-   const totalTimeOfLight = millis();
+  if (lightValue == 'HIGH') {
+   const unsigned totalTimeOfLight = millis();
+   
+  // If growth light has been on for about 13.5 hours
    if (totalTimeOfLight >= 48600000) {
      digitalWrite(2, LOW);
+      } else {
+        digitalWrite(2, HIGH);
       }
     }
+
   }
